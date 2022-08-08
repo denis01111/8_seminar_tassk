@@ -47,16 +47,17 @@ def cancel(update, context):
 
 
 start_handler = CommandHandler('start', start)
+cancel_handler = CommandHandler('cancel', cancel)
 message0_handler = MessageHandler(Filters.text, message0)
 message1_handler = MessageHandler(Filters.text, message1)
 message2_handler = MessageHandler(Filters.text, message2)
-cancel_handler = CommandHandler('/cancel', cancel)
 conv_handler = ConversationHandler(entry_points=[start_handler],
                                    states={STATE0: [message0_handler],
                                            STATE1: [message1_handler],
                                            STATE2: [message2_handler]},
                                    fallbacks=[cancel_handler])
 
+dispatcher.add_handler(cancel_handler)
 dispatcher.add_handler(conv_handler)
 
 # В конце |||
