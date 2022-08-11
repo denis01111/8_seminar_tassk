@@ -16,11 +16,17 @@ oper = ''
 
 
 def numbers(number):
-    pass
+    return 0
 
 
 def result(x, y, z):
-    pass
+    if z == '+':
+        return x + y
+    elif z == '-':
+        return x - y
+    elif z == '*':
+        return x * y
+    return x / y
 
 
 def start(update, context):
@@ -66,15 +72,14 @@ cancel_handler = CommandHandler('cancel', cancel)
 numone_handler = MessageHandler(Filters.text, numberFirst)
 numtwo_handler = MessageHandler(Filters.text, numberSecond)
 oper_handler = MessageHandler(Filters.text, operation)
-conv_handler = ConversationHandler(fallbacks=[start_handler],
+conv_handler = ConversationHandler(entry_points=[start_handler],
                                    states={
                                        NUMBERFIRST: [numone_handler],
                                        NUMBERSECOND: [numtwo_handler],
                                        OPERATION: [oper_handler]
                                    },
-                                   entry_points=[cancel_handler])
+                                   fallbacks=[cancel_handler])
 
-
-
+dispatcher.add_handler(conv_handler)
 updater.start_polling()
 updater.idle()
